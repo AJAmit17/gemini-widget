@@ -2,7 +2,6 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import path from "path"
 
-// https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react()],
   define: {
@@ -17,10 +16,18 @@ export default defineConfig({
   },
   build: {
     lib: {
-      entry: "./src/index.jsx",
-      name: "widget",
+      entry: path.resolve(__dirname, 'src/main.jsx'),
+      name: 'Widget',
       fileName: (format) => `widget.${format}.js`,
     },
-    target: "esnext",
+    rollupOptions: {
+      external: ['react', 'react-dom'],
+      output: {
+        globals: {
+          react: 'React',
+          'react-dom': 'ReactDOM',
+        },
+      },
+    },
   },
 })

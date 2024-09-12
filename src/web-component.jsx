@@ -1,5 +1,6 @@
 /* eslint-disable react/no-is-mounted */
-import ReactDom from "react-dom/client";
+import React from 'react';
+import ReactDOM from "react-dom/client";
 import Chatbot from "./components/Chatbot";
 
 class WidgetWebComponent extends HTMLElement {
@@ -9,8 +10,8 @@ class WidgetWebComponent extends HTMLElement {
   }
 
   connectedCallback() {
-    const root = ReactDom.createRoot(this.shadowRoot);
-    root.render(<Chatbot />);
+    const root = ReactDOM.createRoot(this.shadowRoot);
+    root.render(React.createElement(Chatbot));
   }
 }
 
