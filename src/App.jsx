@@ -5,149 +5,222 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Sparkles, Code, Zap } from "lucide-react";
-import CopyBtn from "@/components/Copy-btn";
-// import Chatbot from "./components/Chatbot";
-import { Toaster } from 'react-hot-toast';
+import { Button } from "@/components/ui/button";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
+import {
+  Sparkles,
+  Code,
+  Zap,
+  Rocket,
+  Copy,
+  Users,
+  Shield,
+  Cpu,
+} from "lucide-react";
+import toast from "react-hot-toast";
+import { Toaster } from "react-hot-toast";
+import Chatbot from "./components/Chatbot";
 
 function App() {
+  const widgetCode = `<my-widget></my-widget>\n<script src="https://gemini-widget.vercel.app/widget.umd.js"></script>`;
+
+  const clickCopy = () => {
+    navigator.clipboard.writeText(widgetCode);
+    toast.success("Widget Copied to clipboard 🎉");
+  };
+
   return (
-    <div>
+    <div className="min-h-screen bg-slate-100 text-slate-800">
       <Toaster />
-      <div className="flex flex-col min-h-screen">
-        <header className="px-4 lg:px-6 h-14 flex items-center">
-          <a className="flex items-center justify-center" href="#">
-            <Sparkles className="h-6 w-6 text-primary" />
-            <span className="ml-2 text-lg font-bold">GeminiWidget</span>
+      <div className="container mx-auto px-4 py-8">
+        <header className="flex items-center justify-between mb-12">
+          <a className="flex items-center space-x-2" href="#">
+            <Sparkles className="h-8 w-8 text-slate-600" />
+            <span className="text-2xl font-bold text-slate-800">
+              GeminiWidget
+            </span>
           </a>
-          <nav className="ml-auto flex gap-4 sm:gap-6">
-            <a
-              className="text-sm font-medium hover:underline underline-offset-4"
-              href="#"
-            >
-              Features
-            </a>
-            <a
-              className="text-sm font-medium hover:underline underline-offset-4"
-              href="#"
-            >
-              Pricing
-            </a>
-            <a
-              className="text-sm font-medium hover:underline underline-offset-4"
-              href="#"
-            >
-              Documentation
-            </a>
-          </nav>
         </header>
-        <main className="flex-1">
-          <section className="w-full py-12 md:py-24 lg:py-32 xl:py-48">
-            <div className="container px-4 md:px-6">
-              <div className="flex flex-col items-center space-y-4 text-center">
-                <div className="space-y-2">
-                  <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl lg:text-6xl/none">
-                    Empower Your Website with AI
-                  </h1>
-                  <p className="mx-auto max-w-[700px] text-gray-500 md:text-xl dark:text-gray-400">
-                    Integrate Google Geminis powerful AI capabilities into your
-                    website with our simple widget.
-                  </p>
-                </div>
-                <div className="w-full max-w-sm space-y-2">
-                  <Card>
+
+        <main>
+          <section className="text-center mb-16">
+            <h1 className="text-4xl font-bold mb-6 text-slate-900">
+              Add AI Magic to Your Website
+            </h1>
+            <p className="text-xl mb-8 text-slate-600 max-w-2xl mx-auto">
+              Boost your website with Google Gemini's AI - it's like having a
+              super-smart assistant for your visitors!
+            </p>
+            <Button
+              size="lg"
+              className="bg-slate-700 rounded-xl hover:bg-slate-800 text-white"
+            >
+              Check out the Demo <Rocket className="ml-2 h-5 w-5" />
+            </Button>
+          </section>
+
+          <Card className="mb-16 bg-white shadow-md">
+            <CardHeader>
+              <CardTitle className="text-2xl text-slate-800">
+                Quick Start Guide
+              </CardTitle>
+              <CardDescription className="text-slate-600">
+                Add our AI widget to your site in just two easy steps
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <ol className="list-decimal list-inside space-y-4 mb-4 text-slate-700">
+                <li>Copy this code:</li>
+                <li>
+                  Paste it just before the closing <code>&lt;/body&gt;</code>{" "}
+                  tag in your HTML file
+                </li>
+              </ol>
+              <div className="bg-slate-100 p-4 rounded-md relative font-mono text-sm">
+                <code className="text-slate-800">{widgetCode}</code>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="absolute top-2 right-2 text-slate-500 hover:text-slate-700"
+                  onClick={clickCopy}
+                >
+                  <Copy className="h-4 w-4" />
+                </Button>
+              </div>
+              <p className="mt-4 text-slate-600">
+                That's it! Your AI assistant is now ready to help your visitors.
+              </p>
+            </CardContent>
+          </Card>
+
+          <Tabs defaultValue="features" className="mb-16">
+            <TabsList className="grid w-full grid-cols-2 bg-slate-200 rounded-xl m-4">
+              <TabsTrigger
+                value="features"
+                className="data-[state=active]:bg-slate-700 data-[state=active]:text-white rounded-xl"
+              >
+                Features
+              </TabsTrigger>
+              <TabsTrigger
+                value="how-to-use"
+                className="data-[state=active]:bg-slate-700 data-[state=active]:text-white rounded-xl"
+              >
+                How to Use
+              </TabsTrigger>
+            </TabsList>
+            <TabsContent value="features">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
+                {[
+                  {
+                    icon: Code,
+                    title: "Easy Setup",
+                    desc: "No coding skills needed - just copy and paste!",
+                  },
+                  {
+                    icon: Sparkles,
+                    title: "AI-Powered Help",
+                    desc: "Answers questions like a friendly expert",
+                  },
+                  {
+                    icon: Zap,
+                    title: "Super Fast",
+                    desc: "Quick responses keep your visitors happy",
+                  },
+                  {
+                    icon: Users,
+                    title: "24/7 Support",
+                    desc: "Always there to help, even when you're asleep",
+                  },
+                  {
+                    icon: Shield,
+                    title: "Safe & Secure",
+                    desc: "Your data is protected with top-notch security",
+                  },
+                  {
+                    icon: Cpu,
+                    title: "Smart Learning",
+                    desc: "Gets better at helping your visitors over time",
+                  },
+                ].map((feature, index) => (
+                  <Card key={index} className="bg-white shadow-sm">
                     <CardHeader>
-                      <CardTitle>Widget Integration</CardTitle>
-                      <CardDescription>
-                        Copy and paste this tag into your HTML
-                      </CardDescription>
+                      <feature.icon className="h-8 w-8 text-slate-600 mb-2" />
+                      <CardTitle className="text-lg text-slate-800">
+                        {feature.title}
+                      </CardTitle>
                     </CardHeader>
                     <CardContent>
-                      {/* <div className="flex space-x-2">
-                        <Input value={widgetTag} readOnly />
-                        <Button size="icon" onClick={copyToClipboard}>
-                          {copied ? (
-                            <Check className="h-4 w-4" />
-                          ) : (
-                            <Copy className="h-4 w-4" />
-                          )}
-                        </Button>
-                      </div> */}
-                      <div className="bg-blue-950 p-6 rounded-md mt-6 relative">
-                        <code className=" text-white">
-                          {`<my-widget></my-widget>`}
-                          <br />
-                          {/* {`<script src="${
-                            import.meta.env.VITE_WIDGET_URL
-                          }/widget.umd.js"></script>`} */}
-                          {`<script src="https://gemini-widget.vercel.app/widget.umd.js"></script>`}
-                        </code>
-                        <CopyBtn
-                          text={`<my-widget></my-widget>\n<script src="https://gemini-widget.vercel.app/widget.umd.js"></script>`}
-                        />
-                      </div>
-                      <div>
-                        <h1 className="text-xl font-bold mb-2">
-                          Start Collecting Feedback
-                        </h1>
-                        <p className="text-lg text-secondary-foreground">
-                          Embed the code in your site
-                        </p>
-                      </div>
+                      <p className="text-slate-600">{feature.desc}</p>
                     </CardContent>
                   </Card>
-                </div>
+                ))}
               </div>
-            </div>
-          </section>
-          <section className="w-full py-12 md:py-24 lg:py-32 bg-gray-100 dark:bg-gray-800">
-            <div className="container px-4 md:px-6">
-              <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-3">
-                <div className="flex flex-col items-center space-y-3 text-center">
-                  <Code className="h-10 w-10 text-primary" />
-                  <h2 className="text-xl font-bold">Easy Integration</h2>
-                  <p className="text-sm text-gray-500 dark:text-gray-400">
-                    Simply copy and paste our widget tag into your HTML. No
-                    complex setup required.
-                  </p>
-                </div>
-                <div className="flex flex-col items-center space-y-3 text-center">
-                  <Sparkles className="h-10 w-10 text-primary" />
-                  <h2 className="text-xl font-bold">
-                    Powered by Google Gemini
-                  </h2>
-                  <p className="text-sm text-gray-500 dark:text-gray-400">
-                    Leverage the advanced AI capabilities of Google Gemini in
-                    your applications.
-                  </p>
-                </div>
-                <div className="flex flex-col items-center space-y-3 text-center">
-                  <Zap className="h-10 w-10 text-primary" />
-                  <h2 className="text-xl font-bold">Boost User Engagement</h2>
-                  <p className="text-sm text-gray-500 dark:text-gray-400">
-                    Enhance user experience with AI-powered interactions and
-                    insights.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </section>
+            </TabsContent>
+            <TabsContent value="how-to-use">
+              <ScrollArea className="h-[400px] mt-6 pr-4">
+                <Accordion type="single" collapsible className="w-full">
+                  {[
+                    {
+                      title: "HTML",
+                      content:
+                        'For a plain HTML website, add these lines just before the closing </body> tag:\n```html\n<my-widget></my-widget>\n<script src="https://gemini-widget.vercel.app/widget.umd.js"></script>\n```',
+                    },
+                    {
+                      title: "React",
+                      content:
+                        "In a React application:\n1. Create a new component file, e.g., GeminiWidget.js:\n```jsx\nimport React, { useEffect } from 'react';\n\nconst GeminiWidget = () => {\n  useEffect(() => {\n    const script = document.createElement('script');\n    script.src = 'https://gemini-widget.vercel.app/widget.umd.js';\n    script.async = true;\n    document.body.appendChild(script);\n    return () => {\n      document.body.removeChild(script);\n    };\n  }, []);\n\n  return <my-widget></my-widget>;\n};\n\nexport default GeminiWidget;\n```\n2. Use it in your app:\n```jsx\nimport GeminiWidget from './GeminiWidget';\n\nfunction App() {\n  return (\n    <div>\n      {/* Your other components */}\n      <GeminiWidget />\n    </div>\n  );\n}\n```",
+                    },
+                    {
+                      title: "Vue.js",
+                      content:
+                        "For Vue.js projects:\n1. Create a new component file, e.g., GeminiWidget.vue:\n```vue\n<template>\n  <my-widget></my-widget>\n</template>\n\n<script>\nexport default {\n  name: 'GeminiWidget',\n  mounted() {\n    const script = document.createElement('script');\n    script.src = 'https://gemini-widget.vercel.app/widget.umd.js';\n    script.async = true;\n    document.body.appendChild(script);\n  },\n  unmounted() {\n    const script = document.querySelector('script[src=\"https://gemini-widget.vercel.app/widget.umd.js\"]');\n    if (script) {\n      document.body.removeChild(script);\n    }\n  }\n}\n</script>\n```\n2. Use it in your app:\n```vue\n<template>\n  <div>\n    <!-- Your other components -->\n    <GeminiWidget />\n  </div>\n</template>\n\n<script>\nimport GeminiWidget from './GeminiWidget.vue';\n\nexport default {\n  components: {\n    GeminiWidget\n  }\n}\n</script>\n```",
+                    },
+                    {
+                      title: "Next.js",
+                      content:
+                        "In a Next.js application:\n1. Create a new component file, e.g., GeminiWidget.js:\n```jsx\nimport { useEffect } from 'react';\n\nconst GeminiWidget = () => {\n  useEffect(() => {\n    const script = document.createElement('script');\n    script.src = 'https://gemini-widget.vercel.app/widget.umd.js';\n    script.async = true;\n    document.body.appendChild(script);\n    return () => {\n      document.body.removeChild(script);\n    };\n  }, []);\n\n  return <my-widget></my-widget>;\n};\n\nexport default GeminiWidget;\n```\n2. Use it in your pages or components:\n```jsx\nimport dynamic from 'next/dynamic';\n\nconst GeminiWidget = dynamic(() => import('../components/GeminiWidget'), {\n  ssr: false\n});\n\nfunction Home() {\n  return (\n    <div>\n      {/* Your other components */}\n      <GeminiWidget />\n    </div>\n  );\n}\n\nexport default Home;\n```",
+                    },
+                    {
+                      title: "Custom Integration",
+                      content:
+                        "If you need help integrating the widget into a different framework or have specific requirements, please contact our support team at support@geminiwidget.com for personalized assistance.",
+                    },
+                  ].map((item, index) => (
+                    <AccordionItem value={`item-${index}`} key={index}>
+                      <AccordionTrigger className="text-slate-800">
+                        {item.title}
+                      </AccordionTrigger>
+                      <AccordionContent className="text-slate-600 whitespace-pre-wrap">
+                        {item.content}
+                      </AccordionContent>
+                    </AccordionItem>
+                  ))}
+                </Accordion>
+              </ScrollArea>
+            </TabsContent>
+          </Tabs>
         </main>
-        <footer className="flex flex-col gap-2 sm:flex-row py-6 w-full shrink-0 items-center px-4 md:px-6 border-t">
-          <p className="text-xs text-gray-500 dark:text-gray-400">
-            © 2023 GeminiWidget Inc. All rights reserved.
-          </p>
-          <nav className="sm:ml-auto flex gap-4 sm:gap-6">
-            <a className="text-xs hover:underline underline-offset-4" href="#">
-              Terms of Service
+
+        <footer className="mt-16 text-center text-slate-500">
+          <p>© 2024 GeminiWidget Inc. All rights reserved.</p>
+          <div className="mt-2 space-x-4">
+            <a href="#" className="hover:text-slate-700">
+              Terms
             </a>
-            <a className="text-xs hover:underline underline-offset-4" href="#">
+            <a href="#" className="hover:text-slate-700">
               Privacy
             </a>
-          </nav>
+          </div>
         </footer>
       </div>
-      {/* <Chatbot /> */}
+      <Chatbot />
     </div>
   );
 }
