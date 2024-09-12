@@ -75,15 +75,15 @@ function App() {
                       </div> */}
                       <div className="bg-blue-950 p-6 rounded-md mt-6 relative">
                         <code className=" text-white">
-                          {`<my-widget"></my-widget>`}
+                          {`<my-widget></my-widget>`}
                           <br />
                           {/* {`<script src="${
                             import.meta.env.VITE_WIDGET_URL
                           }/widget.umd.js"></script>`} */}
-                          {`<script src="https://gemini-widget.vercel.app/dist/widget.umd.js"></script>`}
+                          {`<script src="https://gemini-widget.vercel.app/widget.umd.js"></script>`}
                         </code>
                         <CopyBtn
-                          text={`<my-widget"></my-widget>\n<script src="https://gemini-widget.vercel.app/dist/widget.umd.js"></script>`}
+                          text={`<my-widget></my-widget>\n<script src="https://gemini-widget.vercel.app/widget.umd.js"></script>`}
                         />
                       </div>
                       <div>
