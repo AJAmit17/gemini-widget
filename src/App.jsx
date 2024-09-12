@@ -7,7 +7,7 @@ import {
 } from "@/components/ui/card";
 import { Sparkles, Code, Zap } from "lucide-react";
 import CopyBtn from "@/components/Copy-btn";
-import Chatbot from "./components/Chatbot";
+// import Chatbot from "./components/Chatbot";
 import { Toaster } from 'react-hot-toast';
 
 function App() {
@@ -147,7 +147,7 @@ function App() {
           </nav>
         </footer>
       </div>
-      <Chatbot />
+      {/* <Chatbot /> */}
     </div>
   );
 }

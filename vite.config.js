@@ -15,6 +15,7 @@ export default defineConfig({
     },
   },
   build: {
+    outDir: 'dist',
     lib: {
       entry: path.resolve(__dirname, 'src/main.jsx'),
       name: 'Widget',
