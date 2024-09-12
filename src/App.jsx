@@ -50,7 +50,7 @@ function App() {
                     Empower Your Website with AI
                   </h1>
                   <p className="mx-auto max-w-[700px] text-gray-500 md:text-xl dark:text-gray-400">
-                    Integrate Google Gemini's powerful AI capabilities into your
+                    Integrate Google Geminis powerful AI capabilities into your
                     website with our simple widget.
                   </p>
                 </div>
@@ -77,14 +77,13 @@ function App() {
                         <code className=" text-white">
                           {`<my-widget"></my-widget>`}
                           <br />
-                          {`<script src="${
+                          {/* {`<script src="${
                             import.meta.env.VITE_WIDGET_URL
-                          }/widget.umd.js"></script>`}
+                          }/widget.umd.js"></script>`} */}
+                          {`<script src="https://gemini-widget.vercel.app/dist/widget.umd.js"></script>`}
                         </code>
                         <CopyBtn
-                          text={`<my-widget"></my-widget>\n<script src="${
-                            import.meta.env.VITE_WIDGET_URL
-                          }/widget.umd.js"></script>`}
+                          text={`<my-widget"></my-widget>\n<script src="https://gemini-widget.vercel.app/dist/widget.umd.js"></script>`}
                         />
                       </div>
                       <div>
