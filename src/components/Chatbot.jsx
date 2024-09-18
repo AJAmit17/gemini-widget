@@ -19,9 +19,10 @@ import remarkGfm from "remark-gfm";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { atomDark } from "react-syntax-highlighter/dist/esm/styles/prism";
 
-const Chatbot = () => {
+const Chatbot = ({ apiKey, apiModel }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [generatingAnswer, setGeneratingAnswer] = useState(false);
+  const [error, setError] = useState(null);
   const {
     messages,
     input,
@@ -43,14 +44,14 @@ const Chatbot = () => {
     if (!input.trim()) return;
 
     setGeneratingAnswer(true);
+    setError(null);
     const userMessage = { role: "user", content: input };
     setMessages((prevMessages) => [...prevMessages, userMessage]);
     setInput(""); // Clear the input after sending
 
     try {
-      const apiKey = import.meta.env.VITE_GOOGLE_API_KEY;
       const response = await axios.post(
-        `https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${apiKey}`,
+        `https://generativelanguage.googleapis.com/v1beta/models/${apiModel}:generateContent?key=${apiKey}`,
         { contents: [{ parts: [{ text: input }] }] }
       );
       const answer = response.data.candidates[0].content.parts[0].text;
@@ -58,11 +59,19 @@ const Chatbot = () => {
       setMessages((prevMessages) => [...prevMessages, assistantMessage]);
     } catch (error) {
       console.error("Error details:", error);
-      const errorMessage = {
-        role: "assistant",
-        content: "Sorry - Something went wrong. Please try again!",
-      };
-      setMessages((prevMessages) => [...prevMessages, errorMessage]);
+      let errorMessage = "Sorry - Something went wrong. Please try again!";
+      
+      if (error.response) {
+        if (error.response.status === 400) {
+          errorMessage = "Invalid API key. Please check your API key and try again.";
+        } else if (error.response.status === 404) {
+          errorMessage = "Invalid model name. Please check the model name and try again.";
+        }
+      }
+      
+      setError(errorMessage);
+      const assistantMessage = { role: "assistant", content: errorMessage };
+      setMessages((prevMessages) => [...prevMessages, assistantMessage]);
     } finally {
       setGeneratingAnswer(false);
     }
@@ -116,7 +125,6 @@ const Chatbot = () => {
                         remarkPlugins={[remarkGfm]}
                         components={{
                           code({
-                            node,
                             inline,
                             className,
                             children,
@@ -176,6 +184,9 @@ const Chatbot = () => {
             </CardContent>
             <CardFooter className="widget p-3 md:p-4 border-t bg-gray-50 flex flex-col space-y-2 flex-shrink-0">
               <style>{tailwindStyles}</style>
+              {error && (
+                <div className="text-red-500 text-sm mb-2">{error}</div>
+              )}
               <form onSubmit={generateAnswer} className="w-full">
                 <div className="flex w-full space-x-2">
                   <Input

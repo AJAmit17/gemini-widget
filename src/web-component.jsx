@@ -10,8 +10,11 @@ class WidgetWebComponent extends HTMLElement {
   }
 
   connectedCallback() {
+    const apiKey = this.getAttribute('api-key');
+    const apiModel = this.getAttribute('api-model');
+
     const root = ReactDOM.createRoot(this.shadowRoot);
-    root.render(React.createElement(Chatbot));
+    root.render(React.createElement(Chatbot, { apiKey, apiModel }));
   }
 }
 
