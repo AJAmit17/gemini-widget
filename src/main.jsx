@@ -4,10 +4,11 @@ import App from './App.jsx';
 import './index.css';
 import WidgetWebComponent from "./web-component";
 
-// Define the web component
+document.querySelector('my-widget').setAttribute('api-key', import.meta.env.VITE_GOOGLE_API_KEY);
+document.querySelector('my-widget').setAttribute('api-model', import.meta.env.VITE_GOOGLE_GEMINI_MODEL);
+
 customElements.define("my-widget", WidgetWebComponent);
 
-// Render the React app if there's a root element
 const rootElement = document.getElementById('root');
 if (rootElement) {
   ReactDOM.createRoot(rootElement).render(

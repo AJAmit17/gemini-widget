@@ -33,6 +33,9 @@ const Chatbot = ({ apiKey, apiModel }) => {
   } = useChat();
   const messagesEndRef = useRef(null);
 
+  const actualApiKey = apiKey || import.meta.env.VITE_GOOGLE_API_KEY;
+  const actualApiModel = apiModel || import.meta.env.VITE_GOOGLE_GEMINI_MODEL;
+
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
@@ -51,7 +54,7 @@ const Chatbot = ({ apiKey, apiModel }) => {
 
     try {
       const response = await axios.post(
-        `https://generativelanguage.googleapis.com/v1beta/models/${apiModel}:generateContent?key=${apiKey}`,
+        `https://generativelanguage.googleapis.com/v1beta/models/${actualApiModel}:generateContent?key=${actualApiKey}`,
         { contents: [{ parts: [{ text: input }] }] }
       );
       const answer = response.data.candidates[0].content.parts[0].text;

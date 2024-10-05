@@ -13,8 +13,12 @@ class WidgetWebComponent extends HTMLElement {
     const apiKey = this.getAttribute('api-key');
     const apiModel = this.getAttribute('api-model');
 
+    const props = {};
+    if (apiKey) props.apiKey = apiKey;
+    if (apiModel) props.apiModel = apiModel;
+
     const root = ReactDOM.createRoot(this.shadowRoot);
-    root.render(React.createElement(Chatbot, { apiKey, apiModel }));
+    root.render(React.createElement(Chatbot, props));
   }
 }
 

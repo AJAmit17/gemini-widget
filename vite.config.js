@@ -19,6 +19,7 @@ export default defineConfig({
     lib: {
       entry: path.resolve(__dirname, 'src/main.jsx'),
       name: 'Widget',
+      formats : ['umd'],
       fileName: (format) => `widget.${format}.js`,
     },
     rollupOptions: {

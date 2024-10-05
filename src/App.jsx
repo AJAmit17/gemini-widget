@@ -26,10 +26,10 @@ import {
 } from "lucide-react";
 import toast from "react-hot-toast";
 import { Toaster } from "react-hot-toast";
-import Chatbot from "./components/Chatbot";
+// import Chatbot from "./components/Chatbot";
 
 function App() {
-  const widgetCode = `<my-widget api-key="YOUR_GEMINIA_API_KEY" api-model="GOOGLE_GEMINI_MODEL"></my-widget>\n<script src="https://gemini-widget.vercel.app/widget.umd.js"></script>`;
+  const widgetCode = `<my-widget api-key="YOUR_GEMINI_API_KEY" api-model="GOOGLE_GEMINI_MODEL"></my-widget>\n<script src="https://gemini-widget.vercel.app/widget.umd.js"></script>`;
 
   const clickCopy = () => {
     navigator.clipboard.writeText(widgetCode);
@@ -220,7 +220,7 @@ function App() {
           </div>
         </footer>
       </div>
-      <Chatbot />
+      {/* <Chatbot /> */}
     </div>
   );
 }
