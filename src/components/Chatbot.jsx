@@ -33,8 +33,8 @@ const Chatbot = ({ apiKey, apiModel }) => {
   } = useChat();
   const messagesEndRef = useRef(null);
 
-  const actualApiKey = apiKey || import.meta.env.VITE_GOOGLE_API_KEY;
-  const actualApiModel = apiModel || import.meta.env.VITE_GOOGLE_GEMINI_MODEL;
+  const actualApiKey = apiKey;
+  const actualApiModel = apiModel;
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });

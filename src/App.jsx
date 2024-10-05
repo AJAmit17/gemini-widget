@@ -26,7 +26,9 @@ import {
 } from "lucide-react";
 import toast from "react-hot-toast";
 import { Toaster } from "react-hot-toast";
-// import Chatbot from "./components/Chatbot";
+import Chatbot from "./components/Chatbot";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 
 function App() {
   const widgetCode = `<my-widget api-key="YOUR_GEMINI_API_KEY" api-model="GOOGLE_GEMINI_MODEL"></my-widget>\n<script src="https://gemini-widget.vercel.app/widget.umd.js"></script>`;
@@ -35,6 +37,39 @@ function App() {
     navigator.clipboard.writeText(widgetCode);
     toast.success("Widget Copied to clipboard 🎉");
   };
+
+  const accordionItems = [
+    {
+      title: "Plain HTML",
+      content:
+        'For a plain HTML website, add these lines just before the closing </body> tag:\n\n```html\n<my-widget api-key="YOUR_GEMINI_API_KEY" api-model="GOOGLE_GEMINI_MODEL"></my-widget>\n<script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>\n<script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>\n<script src="https://gemini-widget.vercel.app/widget.umd.js"></script>\n```',
+    },
+    {
+      title: "React",
+      content:
+        "In a React application:\n1. Create a new component file, e.g., GeminiWidget.js:\n\n ```jsx\nimport React, { useEffect } from 'react';\n\nconst GeminiWidget = () => {\n  useEffect(() => {\n    const script = document.createElement('script');\n    script.src = 'https://gemini-widget.vercel.app/widget.umd.js';\n    script.async = true;\n    document.body.appendChild(script);\n    return () => {\n      document.body.removeChild(script);\n    };\n  }, []);\n\n  return <my-widget api-key=\"YOUR_GEMINI_API_KEY\" api-model=\"GOOGLE_GEMINI_MODEL\"></my-widget>;\n};\n\nexport default GeminiWidget;\n```\n2. Use it in your app:\n```jsx\nimport GeminiWidget from './GeminiWidget';\n\nfunction App() {\n  return (\n    <div>\n      {/* Your other components */}\n      <GeminiWidget />\n    </div>\n  );\n}\n```",
+    },
+    {
+      title: "Next.js",
+      content:
+        "In a Next.js application:\n1. Create a new component file, e.g., GeminiWidget.js:\n```jsx\nimport { useEffect } from 'react';\n\nconst GeminiWidget = () => {\n  useEffect(() => {\n    const script = document.createElement('script');\n    script.src = 'https://gemini-widget.vercel.app/widget.umd.js';\n    script.async = true;\n    document.body.appendChild(script);\n    return () => {\n      document.body.removeChild(script);\n    };\n  }, []);\n\n  return <my-widget api-key=\"YOUR_GEMINI_API_KEY\" api-model=\"GOOGLE_GEMINI_MODEL\"></my-widget>;\n};\n\nexport default GeminiWidget;\n```\n2. Use it in your pages or components:\n```jsx\nimport dynamic from 'next/dynamic';\n\nconst GeminiWidget = dynamic(() => import('../components/GeminiWidget'), {\n  ssr: false\n});\n\nfunction Home() {\n  return (\n    <div>\n      {/* Your other components */}\n      <GeminiWidget />\n    </div>\n  );\n}\n\nexport default Home;\n```",
+    },
+    {
+      title: "Remix",
+      content:
+        "In a Remix application:\n1. Create a new component file, e.g., GeminiWidget.js:\n```jsx\nimport { useEffect } from 'react';\n\nconst GeminiWidget = () => {\n  useEffect(() => {\n    const script = document.createElement('script');\n    script.src = 'https://gemini-widget.vercel.app/widget.umd.js';\n    script.async = true;\n    document.body.appendChild(script);\n    return () => {\n      document.body.removeChild(script);\n    };\n  }, []);\n\n  return <my-widget api-key=\"YOUR_GEMINI_API_KEY\" api-model=\"GOOGLE_GEMINI_MODEL\"></my-widget>;\n};\n\nexport default GeminiWidget;\n```\n2. Use it in your routes:\n```jsx\nimport GeminiWidget from './GeminiWidget';\n\nexport default function Index() {\n  return (\n    <div>\n      {/* Your other components */}\n      <GeminiWidget />\n    </div>\n  );\n}\n```",
+    },
+    {
+      title: "Astro",
+      content:
+        "In an Astro project:\n1. Create a new component file, e.g., GeminiWidget.astro:\n```astro\n---\nimport { useEffect } from 'react';\n\nconst GeminiWidget = () => {\n  useEffect(() => {\n    const script = document.createElement('script');\n    script.src = 'https://gemini-widget.vercel.app/widget.umd.js';\n    script.async = true;\n    document.body.appendChild(script);\n    return () => {\n      document.body.removeChild(script);\n    };\n  }, []);\n\n  return <my-widget api-key=\"YOUR_GEMINI_API_KEY\" api-model=\"GOOGLE_GEMINI_MODEL\"></my-widget>;\n};\n\nexport default GeminiWidget;\n---\n<GeminiWidget />\n```\n2. Use it in your pages:\n```astro\n---\nimport GeminiWidget from '../components/GeminiWidget.astro';\n---\n<html>\n  <body>\n    {/* Your other components */}\n    <GeminiWidget />\n  </body>\n</html>\n```",
+    },
+    {
+      title: "Custom Integration",
+      content:
+        "If you need help integrating the widget into a different framework or have specific requirements, please contact our support team at support@geminiwidget.com for personalized assistance.",
+    },
+  ];
 
   return (
     <div className="min-h-screen bg-slate-100 text-slate-800">
@@ -166,39 +201,15 @@ function App() {
             <TabsContent value="how-to-use">
               <ScrollArea className="h-[400px] mt-6 pr-4">
                 <Accordion type="single" collapsible className="w-full">
-                  {[
-                    {
-                      title: "HTML",
-                      content:
-                        'For a plain HTML website, add these lines just before the closing </body> tag:\n```html\n<my-widget></my-widget>\n<script src="https://gemini-widget.vercel.app/widget.umd.js"></script>\n```',
-                    },
-                    {
-                      title: "React",
-                      content:
-                        "In a React application:\n1. Create a new component file, e.g., GeminiWidget.js:\n```jsx\nimport React, { useEffect } from 'react';\n\nconst GeminiWidget = () => {\n  useEffect(() => {\n    const script = document.createElement('script');\n    script.src = 'https://gemini-widget.vercel.app/widget.umd.js';\n    script.async = true;\n    document.body.appendChild(script);\n    return () => {\n      document.body.removeChild(script);\n    };\n  }, []);\n\n  return <my-widget></my-widget>;\n};\n\nexport default GeminiWidget;\n```\n2. Use it in your app:\n```jsx\nimport GeminiWidget from './GeminiWidget';\n\nfunction App() {\n  return (\n    <div>\n      {/* Your other components */}\n      <GeminiWidget />\n    </div>\n  );\n}\n```",
-                    },
-                    {
-                      title: "Vue.js",
-                      content:
-                        "For Vue.js projects:\n1. Create a new component file, e.g., GeminiWidget.vue:\n```vue\n<template>\n  <my-widget></my-widget>\n</template>\n\n<script>\nexport default {\n  name: 'GeminiWidget',\n  mounted() {\n    const script = document.createElement('script');\n    script.src = 'https://gemini-widget.vercel.app/widget.umd.js';\n    script.async = true;\n    document.body.appendChild(script);\n  },\n  unmounted() {\n    const script = document.querySelector('script[src=\"https://gemini-widget.vercel.app/widget.umd.js\"]');\n    if (script) {\n      document.body.removeChild(script);\n    }\n  }\n}\n</script>\n```\n2. Use it in your app:\n```vue\n<template>\n  <div>\n    <!-- Your other components -->\n    <GeminiWidget />\n  </div>\n</template>\n\n<script>\nimport GeminiWidget from './GeminiWidget.vue';\n\nexport default {\n  components: {\n    GeminiWidget\n  }\n}\n</script>\n```",
-                    },
-                    {
-                      title: "Next.js",
-                      content:
-                        "In a Next.js application:\n1. Create a new component file, e.g., GeminiWidget.js:\n```jsx\nimport { useEffect } from 'react';\n\nconst GeminiWidget = () => {\n  useEffect(() => {\n    const script = document.createElement('script');\n    script.src = 'https://gemini-widget.vercel.app/widget.umd.js';\n    script.async = true;\n    document.body.appendChild(script);\n    return () => {\n      document.body.removeChild(script);\n    };\n  }, []);\n\n  return <my-widget></my-widget>;\n};\n\nexport default GeminiWidget;\n```\n2. Use it in your pages or components:\n```jsx\nimport dynamic from 'next/dynamic';\n\nconst GeminiWidget = dynamic(() => import('../components/GeminiWidget'), {\n  ssr: false\n});\n\nfunction Home() {\n  return (\n    <div>\n      {/* Your other components */}\n      <GeminiWidget />\n    </div>\n  );\n}\n\nexport default Home;\n```",
-                    },
-                    {
-                      title: "Custom Integration",
-                      content:
-                        "If you need help integrating the widget into a different framework or have specific requirements, please contact our support team at support@geminiwidget.com for personalized assistance.",
-                    },
-                  ].map((item, index) => (
+                  {accordionItems.map((item, index) => (
                     <AccordionItem value={`item-${index}`} key={index}>
                       <AccordionTrigger className="text-slate-800">
                         {item.title}
                       </AccordionTrigger>
-                      <AccordionContent className="text-slate-600 whitespace-pre-wrap">
-                        {item.content}
+                      <AccordionContent className="text-slate-600">
+                        <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                          {item.content}
+                        </ReactMarkdown>
                       </AccordionContent>
                     </AccordionItem>
                   ))}
@@ -220,7 +231,7 @@ function App() {
           </div>
         </footer>
       </div>
-      {/* <Chatbot /> */}
+      <Chatbot />
     </div>
   );
 }
