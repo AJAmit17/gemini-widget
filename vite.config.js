@@ -17,7 +17,7 @@ export default defineConfig({
   build: {
     outDir: 'dist',
     lib: {
-      entry: path.resolve(__dirname, 'src/main.jsx'),
+      entry: path.resolve(__dirname, 'src/web-component.jsx'),
       name: 'Widget',
       formats : ['umd'],
       fileName: (format) => `widget.${format}.js`,
