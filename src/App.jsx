@@ -26,7 +26,6 @@ import {
 } from "lucide-react";
 import toast from "react-hot-toast";
 import { Toaster } from "react-hot-toast";
-import Chatbot from "./components/Chatbot";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 
