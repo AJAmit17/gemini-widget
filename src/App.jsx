@@ -231,7 +231,7 @@ function App() {
           </div>
         </footer>
       </div>
-      <Chatbot />
+      {/* <Chatbot />/ */}
     </div>
   );
 }
