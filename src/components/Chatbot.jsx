@@ -20,11 +20,6 @@ import remarkGfm from "remark-gfm";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { atomDark } from "react-syntax-highlighter/dist/esm/styles/prism";
 
-// Chatbot.propTypes = {
-//   apiKey: PropTypes.string.isRequired,
-//   apiModel: PropTypes.string.isRequired,
-// };
-
 const Chatbot = ({ apiKey, apiModel }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [generatingAnswer, setGeneratingAnswer] = useState(false);
@@ -100,7 +95,7 @@ const Chatbot = ({ apiKey, apiModel }) => {
             <MessageCircle className="h-5 w-5 md:h-6 md:w-6" />
           </Button>
         ) : (
-          <Card className="widget w-full h-[calc(100vh-2rem)] sm:w-[85vw] sm:h-[80vh] md:w-96 md:h-[600px] shadow-2xl rounded-2xl overflow-hidden transition-all duration-300 flex flex-col">
+          <Card className="widget w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg h-[80vh] md:h-[70vh] lg:h-[60vh] shadow-2xl rounded-2xl overflow-hidden transition-all duration-300 flex flex-col">
             <CardHeader className="bg-gradient-to-r from-purple-600 to-indigo-600 text-white p-3 md:p-4 flex-shrink-0">
               <CardTitle className="flex justify-between items-center text-lg md:text-xl">
                 AI Assistant
@@ -212,7 +207,7 @@ const Chatbot = ({ apiKey, apiModel }) => {
                 </div>
               </form>
               <div className="flex justify-between items-center w-full text-xs text-gray-500">
-                <span>Powered by Gemini Pro</span>
+                <span>Powered by Google Gemini</span>
                 <a
                   href="https://github.com/AJAmit17"
                   target="_blank"
