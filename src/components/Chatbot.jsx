@@ -1,5 +1,6 @@
 /* eslint-disable no-unused-vars */
 import { useState, useEffect, useRef } from "react";
+import PropTypes from "prop-types";
 import { useChat } from "ai/react";
 import { MessageCircle, X, Send, Github } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -18,6 +19,11 @@ import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { atomDark } from "react-syntax-highlighter/dist/esm/styles/prism";
+
+// Chatbot.propTypes = {
+//   apiKey: PropTypes.string.isRequired,
+//   apiModel: PropTypes.string.isRequired,
+// };
 
 const Chatbot = ({ apiKey, apiModel }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -63,15 +69,17 @@ const Chatbot = ({ apiKey, apiModel }) => {
     } catch (error) {
       console.error("Error details:", error);
       let errorMessage = "Sorry - Something went wrong. Please try again!";
-      
+
       if (error.response) {
         if (error.response.status === 400) {
-          errorMessage = "Invalid API key. Please check your API key and try again.";
+          errorMessage =
+            "Invalid API key. Please check your API key and try again.";
         } else if (error.response.status === 404) {
-          errorMessage = "Invalid model name. Please check the model name and try again.";
+          errorMessage =
+            "Invalid model name. Please check the model name and try again.";
         }
       }
-      
+
       setError(errorMessage);
       const assistantMessage = { role: "assistant", content: errorMessage };
       setMessages((prevMessages) => [...prevMessages, assistantMessage]);
@@ -92,8 +100,7 @@ const Chatbot = ({ apiKey, apiModel }) => {
             <MessageCircle className="h-5 w-5 md:h-6 md:w-6" />
           </Button>
         ) : (
-          <Card className="widget w-full h-[calc(100vh-2rem)] md:w-96 md:h-[600px] shadow-2xl rounded-2xl overflow-hidden transition-all duration-300 flex flex-col">
-            <style>{tailwindStyles}</style>
+          <Card className="widget w-full h-[calc(100vh-2rem)] sm:w-[85vw] sm:h-[80vh] md:w-96 md:h-[600px] shadow-2xl rounded-2xl overflow-hidden transition-all duration-300 flex flex-col">
             <CardHeader className="bg-gradient-to-r from-purple-600 to-indigo-600 text-white p-3 md:p-4 flex-shrink-0">
               <CardTitle className="flex justify-between items-center text-lg md:text-xl">
                 AI Assistant
@@ -108,7 +115,6 @@ const Chatbot = ({ apiKey, apiModel }) => {
               </CardTitle>
             </CardHeader>
             <CardContent className="widget p-0 flex-grow overflow-hidden">
-              <style>{tailwindStyles}</style>
               <ScrollArea className="h-full p-3 md:p-4">
                 {messages.map((message, index) => (
                   <div
@@ -127,12 +133,7 @@ const Chatbot = ({ apiKey, apiModel }) => {
                       <ReactMarkdown
                         remarkPlugins={[remarkGfm]}
                         components={{
-                          code({
-                            inline,
-                            className,
-                            children,
-                            ...props
-                          }) {
+                          code({ inline, className, children, ...props }) {
                             const match = /language-(\w+)/.exec(
                               className || ""
                             );
@@ -186,7 +187,6 @@ const Chatbot = ({ apiKey, apiModel }) => {
               </ScrollArea>
             </CardContent>
             <CardFooter className="widget p-3 md:p-4 border-t bg-gray-50 flex flex-col space-y-2 flex-shrink-0">
-              <style>{tailwindStyles}</style>
               {error && (
                 <div className="text-red-500 text-sm mb-2">{error}</div>
               )}

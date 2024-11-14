@@ -4,11 +4,6 @@ import path from "path"
 
 export default defineConfig({
   plugins: [react()],
-  define: {
-    "process.env": {
-      NODE_ENV: "production",
-    },
-  },
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
@@ -18,8 +13,8 @@ export default defineConfig({
     outDir: 'dist',
     lib: {
       entry: path.resolve(__dirname, 'src/web-component.jsx'),
-      name: 'Widget',
-      formats : ['umd'],
+      name: 'GeminiChatWidget',
+      formats: ['umd'],
       fileName: (format) => `widget.${format}.js`,
     },
     rollupOptions: {
