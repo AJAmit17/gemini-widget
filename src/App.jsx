@@ -16,13 +16,8 @@ import {
 } from "@/components/ui/accordion";
 import {
   Sparkles,
-  Code,
-  Zap,
   Rocket,
   Copy,
-  Users,
-  Shield,
-  Cpu,
 } from "lucide-react";
 import toast from "react-hot-toast";
 import { Toaster } from "react-hot-toast";
@@ -30,7 +25,10 @@ import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 
 function App() {
-  const widgetCode = `<my-widget api-key="YOUR_GEMINI_API_KEY" api-model="GOOGLE_GEMINI_MODEL"></my-widget>\n<script src="https://gemini-widget.vercel.app/widget.umd.js"></script>`;
+  const widgetCode = `<script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  <script src="https://gemini-widget.vercel.app/widget.umd.js"></script>
+  <gemini-chat-widget api-key="YOUR_GEMINI_API_KEY" model="gemini-1.5-flash"></gemini-chat-widget>`;
 
   const clickCopy = () => {
     navigator.clipboard.writeText(widgetCode);
@@ -41,32 +39,17 @@ function App() {
     {
       title: "Plain HTML",
       content:
-        'For a plain HTML website, add these lines just before the closing </body> tag:\n\n```html\n<my-widget api-key="YOUR_GEMINI_API_KEY" api-model="GOOGLE_GEMINI_MODEL"></my-widget>\n<script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>\n<script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>\n<script src="https://gemini-widget.vercel.app/widget.umd.js"></script>\n```',
+        'For a plain HTML website, add these lines just before the closing </body> tag:\n\n```html\n<script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>\n<script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>\n<script src="https://gemini-widget.vercel.app/widget.umd.js"></script>\n<gemini-chat-widget api-key="YOUR_GEMINI_API_KEY" model="gemini-1.5-flash"></gemini-chat-widget>\n```',
     },
     {
       title: "React",
       content:
-        "In a React application:\n1. Create a new component file, e.g., GeminiWidget.js:\n\n ```jsx\nimport React, { useEffect } from 'react';\n\nconst GeminiWidget = () => {\n  useEffect(() => {\n    const script = document.createElement('script');\n    script.src = 'https://gemini-widget.vercel.app/widget.umd.js';\n    script.async = true;\n    document.body.appendChild(script);\n    return () => {\n      document.body.removeChild(script);\n    };\n  }, []);\n\n  return <my-widget api-key=\"YOUR_GEMINI_API_KEY\" api-model=\"GOOGLE_GEMINI_MODEL\"></my-widget>;\n};\n\nexport default GeminiWidget;\n```\n2. Use it in your app:\n```jsx\nimport GeminiWidget from './GeminiWidget';\n\nfunction App() {\n  return (\n    <div>\n      {/* Your other components */}\n      <GeminiWidget />\n    </div>\n  );\n}\n```",
+        "In a React application:\n1. Create a new component file, e.g., GeminiWidget.js:\n\n ```jsx\nimport React, { useEffect } from 'react';\n\nconst GeminiWidget = () => {\n  useEffect(() => {\n    const script = document.createElement('script');\n    script.src = 'https://gemini-widget.vercel.app/widget.umd.js';\n    script.async = true;\n    document.body.appendChild(script);\n    return () => {\n      document.body.removeChild(script);\n    };\n  }, []);\n\n  return <gemini-chat-widget api-key=\"YOUR_GEMINI_API_KEY\" model=\"gemini-1.5-flash\"></gemini-chat-widget>;\n};\n\nexport default GeminiWidget;\n```\n2. Use it in your app:\n```jsx\nimport GeminiWidget from './GeminiWidget';\n\nfunction App() {\n  return (\n    <div>\n      {/* Your other components */}\n      <GeminiWidget />\n    </div>\n  );\n}\n```",
     },
     {
       title: "Next.js",
       content:
-        "In a Next.js application:\n1. Create a new component file, e.g., GeminiWidget.js:\n```jsx\nimport { useEffect } from 'react';\n\nconst GeminiWidget = () => {\n  useEffect(() => {\n    const script = document.createElement('script');\n    script.src = 'https://gemini-widget.vercel.app/widget.umd.js';\n    script.async = true;\n    document.body.appendChild(script);\n    return () => {\n      document.body.removeChild(script);\n    };\n  }, []);\n\n  return <my-widget api-key=\"YOUR_GEMINI_API_KEY\" api-model=\"GOOGLE_GEMINI_MODEL\"></my-widget>;\n};\n\nexport default GeminiWidget;\n```\n2. Use it in your pages or components:\n```jsx\nimport dynamic from 'next/dynamic';\n\nconst GeminiWidget = dynamic(() => import('../components/GeminiWidget'), {\n  ssr: false\n});\n\nfunction Home() {\n  return (\n    <div>\n      {/* Your other components */}\n      <GeminiWidget />\n    </div>\n  );\n}\n\nexport default Home;\n```",
-    },
-    {
-      title: "Remix",
-      content:
-        "In a Remix application:\n1. Create a new component file, e.g., GeminiWidget.js:\n```jsx\nimport { useEffect } from 'react';\n\nconst GeminiWidget = () => {\n  useEffect(() => {\n    const script = document.createElement('script');\n    script.src = 'https://gemini-widget.vercel.app/widget.umd.js';\n    script.async = true;\n    document.body.appendChild(script);\n    return () => {\n      document.body.removeChild(script);\n    };\n  }, []);\n\n  return <my-widget api-key=\"YOUR_GEMINI_API_KEY\" api-model=\"GOOGLE_GEMINI_MODEL\"></my-widget>;\n};\n\nexport default GeminiWidget;\n```\n2. Use it in your routes:\n```jsx\nimport GeminiWidget from './GeminiWidget';\n\nexport default function Index() {\n  return (\n    <div>\n      {/* Your other components */}\n      <GeminiWidget />\n    </div>\n  );\n}\n```",
-    },
-    {
-      title: "Astro",
-      content:
-        "In an Astro project:\n1. Create a new component file, e.g., GeminiWidget.astro:\n```astro\n---\nimport { useEffect } from 'react';\n\nconst GeminiWidget = () => {\n  useEffect(() => {\n    const script = document.createElement('script');\n    script.src = 'https://gemini-widget.vercel.app/widget.umd.js';\n    script.async = true;\n    document.body.appendChild(script);\n    return () => {\n      document.body.removeChild(script);\n    };\n  }, []);\n\n  return <my-widget api-key=\"YOUR_GEMINI_API_KEY\" api-model=\"GOOGLE_GEMINI_MODEL\"></my-widget>;\n};\n\nexport default GeminiWidget;\n---\n<GeminiWidget />\n```\n2. Use it in your pages:\n```astro\n---\nimport GeminiWidget from '../components/GeminiWidget.astro';\n---\n<html>\n  <body>\n    {/* Your other components */}\n    <GeminiWidget />\n  </body>\n</html>\n```",
-    },
-    {
-      title: "Custom Integration",
-      content:
-        "If you need help integrating the widget into a different framework or have specific requirements, please contact our support team at support@geminiwidget.com for personalized assistance.",
+        "In a Next.js application:\n1. Create a new component file, e.g., GeminiWidget.js:\n```jsx\nimport { useEffect } from 'react';\n\nconst GeminiWidget = () => {\n  useEffect(() => {\n    const script = document.createElement('script');\n    script.src = 'https://gemini-widget.vercel.app/widget.umd.js';\n    script.async = true;\n    document.body.appendChild(script);\n    return () => {\n      document.body.removeChild(script);\n    };\n  }, []);\n\n  return <gemini-chat-widget api-key=\"YOUR_GEMINI_API_KEY\" model=\"gemini-1.5-flash\"></gemini-chat-widget>;\n};\n\nexport default GeminiWidget;\n```\n2. Use it in your pages or components:\n```jsx\nimport dynamic from 'next/dynamic';\n\nconst GeminiWidget = dynamic(() => import('../components/GeminiWidget'), {\n  ssr: false\n});\n\nfunction Home() {\n  return (\n    <div>\n      {/* Your other components */}\n      <GeminiWidget />\n    </div>\n  );\n}\n\nexport default Home;\n```",
     },
   ];
 
@@ -150,52 +133,7 @@ function App() {
               </TabsTrigger>
             </TabsList>
             <TabsContent value="features">
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
-                {[
-                  {
-                    icon: Code,
-                    title: "Easy Setup",
-                    desc: "No coding skills needed - just copy and paste!",
-                  },
-                  {
-                    icon: Sparkles,
-                    title: "AI-Powered Help",
-                    desc: "Answers questions like a friendly expert",
-                  },
-                  {
-                    icon: Zap,
-                    title: "Super Fast",
-                    desc: "Quick responses keep your visitors happy",
-                  },
-                  {
-                    icon: Users,
-                    title: "24/7 Support",
-                    desc: "Always there to help, even when you're asleep",
-                  },
-                  {
-                    icon: Shield,
-                    title: "Safe & Secure",
-                    desc: "Your data is protected with top-notch security",
-                  },
-                  {
-                    icon: Cpu,
-                    title: "Smart Learning",
-                    desc: "Gets better at helping your visitors over time",
-                  },
-                ].map((feature, index) => (
-                  <Card key={index} className="bg-white shadow-sm">
-                    <CardHeader>
-                      <feature.icon className="h-8 w-8 text-slate-600 mb-2" />
-                      <CardTitle className="text-lg text-slate-800">
-                        {feature.title}
-                      </CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                      <p className="text-slate-600">{feature.desc}</p>
-                    </CardContent>
-                  </Card>
-                ))}
-              </div>
+              {/* Feature content here */}
             </TabsContent>
             <TabsContent value="how-to-use">
               <ScrollArea className="h-[400px] mt-6 pr-4">
@@ -226,6 +164,9 @@ function App() {
             </a>
             <a href="#" className="hover:text-slate-700">
               Privacy
+            </a>
+            <a href="#" className="hover:text-slate-700">
+              Support
             </a>
           </div>
         </footer>
