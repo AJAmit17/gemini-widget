@@ -60,7 +60,7 @@ const Chatbot = ({ apiKey, apiModel }) => {
 
     try {
       const response = await axios.post(
-        `https://generativelanguage.googleapis.com/v1beta/models/${actualApiModel}:generateContent?key=${actualApiKey}`,
+        `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${actualApiKey}`,
         { contents: [{ parts: [{ text: input }] }] }
       );
       const answer = response.data.candidates[0].content.parts[0].text;

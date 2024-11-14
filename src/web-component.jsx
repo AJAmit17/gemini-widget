@@ -11,7 +11,7 @@ class GeminiChatWidget extends HTMLElement {
 
   connectedCallback() {
     const apiKey = this.getAttribute("api-key") || "";
-    const model = this.getAttribute("model") || "gemini-pro";
+    const model = this.getAttribute("model") || "gemini-1.5-flash";
 
     const container = document.createElement("div");
 
